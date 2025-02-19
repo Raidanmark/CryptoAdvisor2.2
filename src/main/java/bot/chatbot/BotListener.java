@@ -1,20 +1,20 @@
 package bot.chatbot;
 
 import bot.commands.CommandRegistry;
-import bot.data.TickerRepository;
 import bot.messages.JDAMessageSender;
 import bot.messages.MessageSender;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class BotListener extends ListenerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(BotListener.class);
+
     private final Map<String, ChatBotSession> chatSessions = new HashMap<>();
-    private CommandRegistry commandRegistry;
+    private final CommandRegistry commandRegistry;
 
     public BotListener(CommandRegistry commandRegistry) {
         this.commandRegistry = commandRegistry;
@@ -29,13 +29,13 @@ public class BotListener extends ListenerAdapter {
         String chatId = event.getChannel().getId();
         String message = event.getMessage().getContentRaw();
 
-        log("[Message Received] Chat ID: " + chatId + ", Message: " + message);
+        logger.info("[Message Received] Chat ID: {}, Message: {}", chatId, message);
 
         try {
             ChatBotSession session = getOrCreateSession(chatId, event);
             session.processCommand(message);
         } catch (Exception e) {
-            logError("Error processing message: " + message, e);
+            logger.error("Error processing message: {}", message, e);
         }
     }
 
@@ -45,7 +45,7 @@ public class BotListener extends ListenerAdapter {
 
     private ChatBotSession getOrCreateSession(String chatId, MessageReceivedEvent event) {
         return chatSessions.computeIfAbsent(chatId, id -> {
-            log("Creating new session for chat ID: " + chatId);
+            logger.info("Creating new session for chat ID: {}", chatId);
             MessageSender messageSender = new JDAMessageSender(event.getChannel());
             return new ChatBotSession(messageSender, commandRegistry);
         });
@@ -56,22 +56,11 @@ public class BotListener extends ListenerAdapter {
             if ("ACTIVE".equals(session.getCurrentStatus().getName())) {
                 try {
                     session.getMessageSender().sendMessage(message);
-                    log("[Broadcast] Message sent: " + message);
+                    logger.info("[Broadcast] Message sent: {}", message);
                 } catch (Exception e) {
-                    logError("Failed to send broadcast message: " + message, e);
+                    logger.error("Failed to send broadcast message: {}", message, e);
                 }
             }
         });
     }
-
-    private void log(String message) {
-        System.out.println("[BotListener] " + message);
-    }
-
-    private void logError(String message, Throwable e) {
-        System.err.println("[BotListener] " + message);
-        e.printStackTrace();
-    }
-
-
 }

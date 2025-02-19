@@ -1,36 +1,45 @@
 package bot;
 
-import bot.analytics.Analyzer;
 import bot.analytics.TickerAnalyzer;
 import bot.chatbot.BotCore;
 import bot.chatbot.BotListener;
-import bot.chatbot.Config;
+import bot.chatbot.BotService;
+import bot.chatbot.ChatBotSession;
 import bot.commands.CommandRegistry;
-import bot.commands.StatusCommand;
+import bot.config.Config;
 import bot.data.Data;
-import bot.data.DataCollecting;
-import bot.data.HuobiApi;
 import bot.data.TickerRepository;
+import bot.factory.BotFactory;
+import bot.factory.CommandFactory;
+import bot.factory.DiscordBotFactory;
+import bot.factory.TickerStorageFactory;
+import net.dv8tion.jda.api.JDA;
 
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            AppConfig appConfig = new AppConfig();
 
-            Config config = appConfig.createConfig();
-            TickerRepository tickerRepository = appConfig.createTickerRepository();
-            CommandRegistry commandRegistry = appConfig.createCommandRegistry(tickerRepository);
+
+            // 1️⃣ Создаём конфиг
+            Config config = new Config();
+
+            // 2️⃣ Создаём CommandRegistry
+
+            TickerRepository tickerRepository = TickerStorageFactory.createTickerRepository("memory");
+            CommandRegistry commandRegistry = CommandFactory.createCommandRegistry(tickerRepository);
+
+            // 3️⃣ Создаём BotListener
             BotListener botListener = new BotListener(commandRegistry);
-            BotCore botCore = appConfig.createBotCore(config, botListener);
-            DataCollecting dataCollecting = appConfig.createDataCollecting(tickerRepository);
-            Data data = appConfig.createData(tickerRepository, dataCollecting);
-            List<Analyzer> analyzers = appConfig.createAnalyzers(data, botListener);
-            TickerAnalyzer tickerAnalyzer = appConfig.createTickerAnalyzer(analyzers);
 
-            tickerRepository.setTickerAnalyzer(tickerAnalyzer);
-            data.start();
+
+            // 4️⃣ Создаём JDA через фабрику
+            JDA jda = DiscordBotFactory.createJDA(config.getDiscordToken(), botListener);
+
+            // 5️⃣ Создаём и запускаем бота
+            BotService botService = BotFactory.createBot("discord", jda);
+            BotCore botCore = new BotCore(botService);
+            botCore.start();
 
 
             System.out.println("App successfully started!");

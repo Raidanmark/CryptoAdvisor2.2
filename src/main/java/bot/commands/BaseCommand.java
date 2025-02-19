@@ -1,6 +1,5 @@
 package bot.commands;
 
-import bot.messages.CommandContext;
 import bot.status.Status;
 
 public abstract class BaseCommand implements Command {

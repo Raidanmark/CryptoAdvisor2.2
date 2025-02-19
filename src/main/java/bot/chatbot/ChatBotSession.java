@@ -1,6 +1,7 @@
 package bot.chatbot;
 
-import bot.commands.*;
+import bot.commands.Command;
+import bot.commands.CommandRegistry;
 import bot.messages.CommandContext;
 import bot.messages.MessageSender;
 import bot.status.Status;

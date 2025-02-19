@@ -1,5 +1,6 @@
-package bot.analytics;
+package bot.analytics.methods;
 
+import bot.analytics.Analyzer;
 import bot.chatbot.BotListener;
 import bot.data.Data;
 import bot.data.model.Ticker;
@@ -7,7 +8,7 @@ import bot.data.model.Ticker;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bot.data.DataConfig.*;
+import static bot.config.DataConfig.*;
 
 public class MACD implements Analyzer {
     private final Data data;

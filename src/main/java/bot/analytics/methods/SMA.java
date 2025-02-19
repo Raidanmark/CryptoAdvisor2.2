@@ -1,12 +1,13 @@
-package bot.analytics;
+package bot.analytics.methods;
 
+import bot.analytics.Analyzer;
 import bot.chatbot.BotListener;
 import bot.data.Data;
 import bot.data.model.Ticker;
 
 import java.util.List;
 
-public class SMA implements Analyzer{
+public class SMA implements Analyzer {
      private final Data data;
      private final BotListener listener;
 

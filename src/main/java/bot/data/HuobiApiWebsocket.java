@@ -9,7 +9,6 @@ import com.huobi.constant.HuobiOptions;
 import com.huobi.constant.enums.CandlestickIntervalEnum;
 
 import java.util.Arrays;
-import java.util.function.BiConsumer;
 
 public class HuobiApiWebsocket implements Websocket {
     private final ObjectMapper objectMapper;

@@ -1,5 +1,6 @@
-package bot.commands;
+package bot.commands.impl;
 
+import bot.commands.BaseCommand;
 import bot.messages.CommandContext;
 import bot.status.Status;
 

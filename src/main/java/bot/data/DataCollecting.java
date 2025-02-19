@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import bot.analytics.TickerAnalyzer;
+import bot.config.DataConfig;
 import bot.data.model.*;
 
 public class DataCollecting {
