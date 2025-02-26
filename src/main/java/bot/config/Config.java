@@ -1,4 +1,4 @@
-package bot.chatbot;
+package bot.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

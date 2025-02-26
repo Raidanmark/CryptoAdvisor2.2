@@ -1,17 +1,21 @@
-package bot.analytics;
+package bot.analytics.methods;
 
-import bot.chatbot.BotListener;
+import bot.analytics.Analyzer;
+import bot.bottype.discord.BotListener;
 import bot.data.Data;
 import bot.data.model.Ticker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static bot.data.DataConfig.*;
+import static bot.config.DataConfig.*;
 
 public class MACD implements Analyzer {
     private final Data data;
     private final BotListener listener;
+    private static final Logger logger = LoggerFactory.getLogger(MACD.class);
 
     public MACD(Data data, BotListener listener) {
         this.data = data;
@@ -35,7 +39,7 @@ public class MACD implements Analyzer {
 
                 listener.broadcastMessage("Ticker: " + ticker.symbol() + " Timeframe: " + ticker.timeframe() + " MACD signal: BUY");
 
-                System.out.println("BUY");
+                logger.info("BUY");
 
                 Ticker updatedTicker = new Ticker(
                         ticker.symbol(),
@@ -47,14 +51,14 @@ public class MACD implements Analyzer {
                 );
                 data.updateTicker(updatedTicker);
 
-            } else { System.out.println("BUY"); }
+            } else { logger.info("BUY"); }
         } else {
 
             if (ticker.MACDsignal() == true) {
 
                 listener.broadcastMessage("Ticker: " + ticker.symbol() + " Timeframe: " + ticker.timeframe() + " MACD signal: SELL");
 
-                System.out.println("SELL");
+                logger.info("SELL");
 
                 Ticker updatedTicker = new Ticker(
                     ticker.symbol(),
@@ -65,7 +69,7 @@ public class MACD implements Analyzer {
                     false
                 );
                 data.updateTicker(updatedTicker);
-            } else {System.out.println("SELL"); }
+            } else {logger.info("SELL"); }
 
 
         }

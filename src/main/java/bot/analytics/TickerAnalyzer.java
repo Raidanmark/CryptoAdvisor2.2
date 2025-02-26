@@ -1,11 +1,14 @@
 package bot.analytics;
 
 import bot.data.model.Ticker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 public class TickerAnalyzer {
-
-        private final List<Analyzer> analyzers;
+    private static final Logger logger = LoggerFactory.getLogger(TickerAnalyzer.class);
+    private final List<Analyzer> analyzers;
 
         public TickerAnalyzer(List<Analyzer> analyzers) {
             this.analyzers = analyzers;
@@ -16,13 +19,12 @@ public class TickerAnalyzer {
                 try {
                     analyzer.analyze(ticker);
                 } catch (Exception e) {
-                    logError("Error analyzing ticker: " + ticker.symbol(), e);
+                    logger.error("Error analyzing ticker: " + ticker.symbol(), e);
                 }
             }
         }
 
         private void logError(String message, Throwable e) {
-            System.err.println("[TickerAnalyzer] " + message);
-            e.printStackTrace();
+            logger.error("[TickerAnalyzer] " + message, e);
         }
     }

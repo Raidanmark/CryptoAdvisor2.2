@@ -5,8 +5,13 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import bot.analytics.TickerAnalyzer;
+import bot.config.CandleFilter;
+import bot.config.DataConfig;
+import bot.data.api.ApiClient;
+import bot.data.api.Websocket;
 import bot.data.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DataCollecting {
     private final ApiClient apiClient;
@@ -14,6 +19,7 @@ public class DataCollecting {
     private final TickerRepository tickerRepository;
     private final DataConfig dataConfig;
     private final CandleFilter candleFilter;
+    private static final Logger logger = LoggerFactory.getLogger(DataCollecting.class);
 
 
     public DataCollecting(ApiClient apiClient, Websocket websocket, TickerRepository tickerRepository, DataConfig dataConfig, CandleFilter candleFilter) {
@@ -22,6 +28,7 @@ public class DataCollecting {
         this.tickerRepository = tickerRepository;
         this.dataConfig = dataConfig;
         this.candleFilter = candleFilter;
+
 
     }
 
@@ -58,8 +65,7 @@ public class DataCollecting {
                     allTickers.add(createTicker(ticker, timeframe, klineData));
                     setupWebsocketUpdates(ticker.symbol(), timeframe);
                 } catch (IOException | URISyntaxException e) {
-                    System.err.println("Error fetching candles for ticker: " + ticker.symbol());
-                    e.printStackTrace();
+                    logger.error("Error fetching candles for ticker: " + ticker.symbol(), e);
                 }
             }
         }
@@ -110,13 +116,11 @@ public class DataCollecting {
                 tickerRepository.updateTicker(updatedTicker);
                 tickerRepository.analyzeUpdatedTicker(updatedTicker);
 
-                System.out.println("Тикер обновлён: " + symbol + " (" + timeframe + ")");
+                logger.info("Тикер обновлён: " + symbol + " (" + timeframe + ")");
 
-            } else {
-                System.out.println("Старые данные, обновление не требуется.");
-            }
+            } else {}
         } else {
-            System.err.println("Тикер не найден: " + symbol + " и таймфрейм: " + timeframe);
+            logger.error("Тикер не найден: " + symbol + " и таймфрейм: " + timeframe);
         }
     }
 }

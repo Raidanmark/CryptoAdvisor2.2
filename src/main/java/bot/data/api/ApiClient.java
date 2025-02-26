@@ -1,4 +1,4 @@
-package bot.data;
+package bot.data.api;
 
 import bot.data.model.Kline;
 import bot.data.model.MarketData;

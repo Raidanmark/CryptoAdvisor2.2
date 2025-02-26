@@ -1,9 +1,10 @@
-package bot.commands;
+package bot.commands.impl;
 
+import bot.commands.BaseCommand;
 import bot.messages.CommandContext;
 import bot.status.Status;
 
-import static bot.commands.CommandResponse.STOP_COMMAND_MESSAGE;
+import static bot.config.CommandResponse.STOP_COMMAND_MESSAGE;
 
 public class StopCommand extends BaseCommand {
 

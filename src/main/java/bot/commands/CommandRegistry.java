@@ -1,27 +1,19 @@
 package bot.commands;
 
-import bot.data.TickerRepository;
+import bot.commands.impl.*;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CommandRegistry {
     private final Map<String, Command> commands = new HashMap<>();
     private final Command unknownCommand;
-    private  TickerRepository tickerRepository;
 
-    public CommandRegistry(TickerRepository tickerRepository) {
+    public CommandRegistry(List<Command> commands) {
         this.unknownCommand = new UnknownCommand();
-        this.tickerRepository = tickerRepository;
-        registerDefaultCommands();
-    }
-
-    private void registerDefaultCommands() {
-        registerCommand(new HelpCommand());
-        registerCommand(new StartCommand());
-        registerCommand(new StopCommand());
-        registerCommand(new StatusCommand(tickerRepository));
+        commands.forEach(this::registerCommand);
     }
 
     public void registerCommand(Command command) {

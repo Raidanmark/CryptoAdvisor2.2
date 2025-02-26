@@ -1,14 +1,18 @@
-package bot.analytics;
+package bot.analytics.methods;
 
-import bot.chatbot.BotListener;
+import bot.analytics.Analyzer;
+import bot.bottype.discord.BotListener;
 import bot.data.Data;
 import bot.data.model.Ticker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class SMA implements Analyzer{
+public class SMA implements Analyzer {
      private final Data data;
      private final BotListener listener;
+    private static final Logger logger = LoggerFactory.getLogger(SMA.class);
 
     public SMA(Data data, BotListener listener) {
         this.data = data;
@@ -32,7 +36,7 @@ public class SMA implements Analyzer{
 
                 listener.broadcastMessage("Ticker: " + ticker.symbol() + " Timeframe: " + ticker.timeframe() + " SMA signal: BUY");
 
-                System.out.println("BUY");
+                logger.info("BUY");
 
                 Ticker updatedTicker = new Ticker(
                         ticker.symbol(),
@@ -46,13 +50,13 @@ public class SMA implements Analyzer{
 
 
 
-            } else { System.out.println("BUY");}
+            } else { logger.info("BUY");}
         } else {
             if (ticker.SMAsignal() == true) {
 
                 listener.broadcastMessage("Ticker: " + ticker.symbol() + " Timeframe: " + ticker.timeframe() + " SMA signal: SELL");
 
-                System.out.println("SELL");
+                logger.info("SELL");
 
                 Ticker updatedTicker = new Ticker(
                         ticker.symbol(),
@@ -63,7 +67,7 @@ public class SMA implements Analyzer{
                         ticker.MACDsignal()
                 );
                 data.updateTicker(updatedTicker);
-            } else {  System.out.println("SELL");}
+            } else {  logger.info("SELL");}
         }
     }
 

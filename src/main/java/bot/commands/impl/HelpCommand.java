@@ -1,10 +1,10 @@
-package bot.commands;
+package bot.commands.impl;
 
+import bot.commands.BaseCommand;
 import bot.messages.CommandContext;
 import bot.status.Status;
 
-import static bot.commands.CommandResponse.HELP_COMMAND_MESSAGE_ACTIVE;
-import static bot.commands.CommandResponse.HELP_COMMAND_MESSAGE_INACTIVE;
+import static bot.config.CommandResponse.*;
 
 public class HelpCommand extends BaseCommand {
 
@@ -33,7 +33,7 @@ public class HelpCommand extends BaseCommand {
                 break;
 
             default:
-                context.getMessageSender().sendMessage("Unknown status. Commands may be unavailable.");
+                context.getMessageSender().sendMessage(UNKNOWN_STATUS_MESSAGE);
                 break;
         }
 

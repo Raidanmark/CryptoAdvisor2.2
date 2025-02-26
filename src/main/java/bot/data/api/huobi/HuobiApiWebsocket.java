@@ -1,5 +1,8 @@
-package bot.data;
+package bot.data.api.huobi;
 
+import bot.data.CandlestickHandler;
+import bot.data.DataCollecting;
+import bot.data.api.Websocket;
 import bot.data.model.Kline;
 import bot.data.model.WebSocketMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +12,6 @@ import com.huobi.constant.HuobiOptions;
 import com.huobi.constant.enums.CandlestickIntervalEnum;
 
 import java.util.Arrays;
-import java.util.function.BiConsumer;
 
 public class HuobiApiWebsocket implements Websocket {
     private final ObjectMapper objectMapper;

@@ -1,11 +1,11 @@
-package bot.data;
+package bot.data.api.huobi;
 
+import bot.data.api.ApiClient;
 import bot.data.model.ApiResponse;
 import bot.data.model.Kline;
 import bot.data.model.MarketData;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.protobuf.Api;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.NameValuePair;
@@ -47,7 +47,7 @@ public class HuobiApi implements ApiClient {
         return makeAPICall(endpoint, parameters, typeReference);
     }
 
-    protected  <T> T makeAPICall(String endpoint, Map<String, String> parameters, TypeReference<ApiResponse<T>> typeReference) throws IOException, URISyntaxException {
+    public  <T> T makeAPICall(String endpoint, Map<String, String> parameters, TypeReference<ApiResponse<T>> typeReference) throws IOException, URISyntaxException {
         List<NameValuePair> callParameters = parameters.entrySet()
                 .stream()
                 .map(entry -> new BasicNameValuePair(entry.getKey(), entry.getValue()))

@@ -1,4 +1,4 @@
-package bot.data;
+package bot.config;
 
 import java.util.Arrays;
 import java.util.List;

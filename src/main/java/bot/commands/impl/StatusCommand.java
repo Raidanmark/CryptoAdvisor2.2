@@ -1,5 +1,6 @@
-package bot.commands;
+package bot.commands.impl;
 
+import bot.commands.BaseCommand;
 import bot.data.TickerRepository;
 import bot.data.model.Ticker;
 import bot.messages.CommandContext;

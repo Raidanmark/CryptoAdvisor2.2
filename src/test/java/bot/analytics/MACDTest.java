@@ -1,6 +1,8 @@
 package bot.analytics;
 
-import bot.chatbot.BotListener;
+import bot.analytics.methods.MACD;
+
+import bot.bottype.discord.BotListener;
 import bot.data.Data;
 import bot.data.model.Ticker;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class MACDTest {

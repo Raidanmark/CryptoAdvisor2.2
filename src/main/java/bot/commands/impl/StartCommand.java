@@ -1,9 +1,10 @@
-package bot.commands;
+package bot.commands.impl;
 
+import bot.commands.BaseCommand;
 import bot.messages.CommandContext;
 import bot.status.Status;
 
-import static bot.commands.CommandResponse.START_COMMAND_MESSAGE;
+import static bot.config.CommandResponse.START_COMMAND_MESSAGE;
 
 public class StartCommand extends BaseCommand {
 
