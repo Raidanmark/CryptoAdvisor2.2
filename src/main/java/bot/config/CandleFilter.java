@@ -1,4 +1,4 @@
-package bot.data;
+package bot.config;
 
 public class CandleFilter {
     public long getIntervalDuration(String interval) {

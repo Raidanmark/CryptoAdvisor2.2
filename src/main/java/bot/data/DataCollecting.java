@@ -5,8 +5,10 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import bot.config.CandleFilter;
 import bot.config.DataConfig;
 import bot.data.api.ApiClient;
+import bot.data.api.Websocket;
 import bot.data.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,9 +118,7 @@ public class DataCollecting {
 
                 logger.info("Тикер обновлён: " + symbol + " (" + timeframe + ")");
 
-            } else {
-                logger.info("Старые данные, обновление не требуется.");
-            }
+            } else {}
         } else {
             logger.error("Тикер не найден: " + symbol + " и таймфрейм: " + timeframe);
         }

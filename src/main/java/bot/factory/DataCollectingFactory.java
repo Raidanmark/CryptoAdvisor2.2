@@ -1,15 +1,15 @@
 package bot.factory;
 
+import bot.config.CandleFilter;
 import bot.config.DataConfig;
 import bot.data.*;
 import bot.data.api.ApiClient;
-import bot.data.api.huobi.HuobiApi;
-import org.apache.http.impl.client.HttpClients;
+import bot.data.api.Websocket;
 
 public class DataCollectingFactory {
     public static DataCollecting create(TickerRepository tickerRepository) {
-        ApiClient apiClient = HuobiApiFactory.create(tickerRepository);
-        Websocket websocket = new Websocket();
+        ApiClient apiClient = HuobiApiFactory.createREST(tickerRepository);
+        Websocket websocket = HuobiApiFactory.createWebsocket();
         DataConfig dataConfig = new DataConfig();
         CandleFilter candleFilter = new CandleFilter();
 

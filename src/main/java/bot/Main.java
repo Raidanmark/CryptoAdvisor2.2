@@ -6,6 +6,7 @@ import bot.chatbot.BotCore;
 import bot.chatbot.BotService;
 import bot.commands.CommandRegistry;
 import bot.config.Config;
+import bot.data.Data;
 import bot.data.DataCollecting;
 import bot.data.TickerRepository;
 import bot.factory.*;
@@ -33,18 +34,22 @@ public class Main {
             CommandRegistry commandRegistry = CommandFactory.createCommandRegistry(tickerRepository);
             // Creating data agregation module
             DataCollecting dataCollecting = DataCollectingFactory.create(tickerRepository);
-
-            // Создаём BotListener
-
+            Data data = new Data(tickerRepository, dataCollecting);
 
 
-            // 4️⃣ Создаём JDA через фабрику
+
+
+            // Создаём Discord BotListener
+            BotListener botListener = new BotListener(commandRegistry);
+            // Создаём JDA через фабрику
             JDA jda = DiscordBotFactory.createJDA(config.getDiscordToken(), botListener);
 
             // 5️⃣ Создаём и запускаем бота
             BotService botService = BotFactory.createBot("discord", jda);
             BotCore botCore = new BotCore(botService);
             botCore.start();
+            data.start();
+
 
             logger.info("App successfully started!");
 
