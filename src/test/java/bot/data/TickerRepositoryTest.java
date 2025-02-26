@@ -1,6 +1,7 @@
 package bot.data;
 
 import bot.data.model.Ticker;
+import bot.factory.TickerStorageFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class TickerRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        tickerRepository = new TickerRepository();
+        tickerRepository = TickerStorageFactory.createTickerRepository("memory");
     }
 
     @Test

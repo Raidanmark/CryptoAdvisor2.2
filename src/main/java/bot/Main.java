@@ -1,36 +1,41 @@
 package bot;
 
 import bot.analytics.TickerAnalyzer;
+import bot.bottype.discord.BotListener;
 import bot.chatbot.BotCore;
-import bot.chatbot.BotListener;
 import bot.chatbot.BotService;
-import bot.chatbot.ChatBotSession;
 import bot.commands.CommandRegistry;
 import bot.config.Config;
-import bot.data.Data;
+import bot.data.DataCollecting;
 import bot.data.TickerRepository;
-import bot.factory.BotFactory;
-import bot.factory.CommandFactory;
-import bot.factory.DiscordBotFactory;
-import bot.factory.TickerStorageFactory;
+import bot.factory.*;
 import net.dv8tion.jda.api.JDA;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
         try {
 
 
-            // 1️⃣ Создаём конфиг
+            // Создаём конфиг
             Config config = new Config();
 
-            // 2️⃣ Создаём CommandRegistry
+            //Создавать тут все конфиги
 
+
+            // Data storage
             TickerRepository tickerRepository = TickerStorageFactory.createTickerRepository("memory");
+            // Commands initialization
             CommandRegistry commandRegistry = CommandFactory.createCommandRegistry(tickerRepository);
+            // Creating data agregation module
+            DataCollecting dataCollecting = DataCollectingFactory.create(tickerRepository);
 
-            // 3️⃣ Создаём BotListener
-            BotListener botListener = new BotListener(commandRegistry);
+            // Создаём BotListener
+
 
 
             // 4️⃣ Создаём JDA через фабрику
@@ -41,11 +46,16 @@ public class Main {
             BotCore botCore = new BotCore(botService);
             botCore.start();
 
+            logger.info("App successfully started!");
 
-            System.out.println("App successfully started!");
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                logger.info("Shutting down...");
+                botCore.stop();
+                logger.info("App successfully stopped!");
+            }));
+
         } catch (Exception e) {
-            System.err.println("Initializing app error: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("Initializing app error: " + e);
         }
     }
 }

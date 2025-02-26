@@ -1,7 +1,9 @@
 package bot.factory;
 
-import bot.chatbot.BotListener;
+
+import bot.bottype.discord.BotListener;
 import bot.chatbot.JDABotService;
+import bot.commands.CommandRegistry;
 import bot.config.Config;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -23,5 +25,13 @@ public class DiscordBotFactory {
             logger.error("Error creating JDA: {}", e.getMessage(), e);
             throw new RuntimeException("Error creating JDA", e);
         }
+    }
+
+    private static BotListener createBotListener(CommandRegistry commandRegistry) {
+        return new BotListener(commandRegistry);
+    }
+
+    private static JDA createJDA(Config config, BotListener botListener) {
+        return DiscordBotFactory.createJDA(config.getDiscordToken(), botListener);
     }
 }

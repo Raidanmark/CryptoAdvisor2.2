@@ -22,7 +22,7 @@ public class JDABotService implements BotService {
     public void start(){
         try {
             jda.awaitReady();
-            System.out.println("Discord bot is ready!");
+            logger.info("Discord bot is ready!");
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException("JDA initialization was interrupted", e);
@@ -32,6 +32,6 @@ public class JDABotService implements BotService {
     @Override
     public void stop(){
         jda.shutdown();
-        System.out.println("Discord bot stopped.");
+        logger.info("Discord bot stopped.");
     }
 }

@@ -1,5 +1,6 @@
 package bot.data;
 
+import bot.data.api.huobi.HuobiApi;
 import bot.data.model.ApiResponse;
 import bot.data.model.Kline;
 import bot.data.model.MarketData;

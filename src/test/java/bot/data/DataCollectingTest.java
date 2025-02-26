@@ -1,6 +1,7 @@
 package bot.data;
 
 import bot.config.DataConfig;
+import bot.data.api.ApiClient;
 import bot.data.model.Kline;
 import bot.data.model.Ticker;
 import org.junit.jupiter.api.Test;
