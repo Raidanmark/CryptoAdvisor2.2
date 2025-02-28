@@ -1,0 +1,30 @@
+package bot.bot.commands.impl;
+
+import bot.bot.commands.BaseCommand;
+import bot.bot.messages.CommandContext;
+import bot.bot.commands.Status;
+
+import static bot.bot.config.CommandResponse.START_COMMAND_MESSAGE;
+
+public class StartCommand extends BaseCommand {
+
+    @Override
+    public String getName() {
+        return "!start"; // Приведено к нижнему регистру для согласованности
+    }
+
+    @Override
+    public boolean isAvailableInStatus(Status status) {
+        return status.getName().equals("INACTIVE"); // Команда доступна только в статусе INACTIVE
+    }
+
+    @Override
+    public void execute(CommandContext context) {
+        context.getMessageSender().sendMessage(START_COMMAND_MESSAGE);
+    }
+
+    @Override
+    public Status getNewStatus() {
+        return new Status("ACTIVE"); // После выполнения меняем статус на ACTIVE
+    }
+}

@@ -1,18 +1,14 @@
 package bot;
 
-import bot.bottype.discord.BotListener;
-import bot.chatbot.BotCore;
-import bot.chatbot.BotService;
-import bot.commands.CommandRegistry;
-import bot.config.Config;
-import bot.data.Data;
-import bot.data.DataCollecting;
-import bot.data.TickerRepository;
-import bot.factory.*;
-import bot.factory.bot.BotFactory;
-import bot.factory.bot.DiscordBotFactory;
-import model.entities.*;
-import model.factory.DAOFactory;
+import bot.bot.bottype.discord.BotListener;
+import bot.bot.chatbot.BotCore;
+import bot.bot.chatbot.BotService;
+import bot.bot.commands.CommandFactory;
+import bot.bot.commands.CommandRegistry;
+import bot.bot.config.Config;
+import bot.bot.chatbot.BotFactory;
+import bot.bot.bottype.discord.DiscordBotFactory;
+import bot.model.factory.DAOFactory;
 import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +39,7 @@ public class Main {
 
             DAOFactory daoFactory = new DAOFactory(connection);
 
-
+/*
             for (Ticker ticker : allTickers) {
                 for (Timeframe tf : allTimeframes) {
                     //TODO: Here full candles
@@ -57,15 +53,12 @@ public class Main {
                     }
                 }
             }
+*/
 
 
-            // Data storage
-            TickerRepository tickerRepository = TickerStorageFactory.createTickerRepository("memory");
             // Commands initialization
-            CommandRegistry commandRegistry = CommandFactory.createCommandRegistry(tickerRepository);
-            // Creating data agregation module
-            DataCollecting dataCollecting = DataCollectingFactory.create(tickerRepository);
-            Data data = new Data(tickerRepository, dataCollecting);
+            CommandRegistry commandRegistry = CommandFactory.createCommandRegistry();
+
 
 
 
@@ -81,7 +74,7 @@ public class Main {
             BotService botService = BotFactory.createBot("discord", jda);
             BotCore botCore = new BotCore(botService);
             botCore.start();
-            data.start();
+
 
 
             logger.info("App successfully started!");

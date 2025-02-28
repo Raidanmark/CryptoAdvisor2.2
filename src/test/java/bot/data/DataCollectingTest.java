@@ -1,17 +1,15 @@
 package bot.data;
 
-import bot.config.CandleFilter;
-import bot.config.DataConfig;
+import bot.bot.config.CandleFilter;
+import bot.bot.config.DataConfig;
 import bot.data.api.ApiClient;
 import bot.data.api.Websocket;
 import bot.data.model.Kline;
-import bot.data.model.Ticker;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.LinkedList;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class DataCollectingTest {

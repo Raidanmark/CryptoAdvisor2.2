@@ -1,6 +1,5 @@
 package bot.data;
 
-import bot.data.model.Ticker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

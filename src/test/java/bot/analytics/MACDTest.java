@@ -1,10 +1,8 @@
 package bot.analytics;
 
-import model.analytics.methods.MACD;
+import bot.model.analytics.methods.MACD;
 
-import bot.bottype.discord.BotListener;
-import bot.data.Data;
-import bot.data.model.Ticker;
+import bot.bot.bottype.discord.BotListener;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

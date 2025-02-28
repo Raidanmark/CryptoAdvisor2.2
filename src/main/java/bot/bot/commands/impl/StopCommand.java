@@ -1,0 +1,30 @@
+package bot.bot.commands.impl;
+
+import bot.bot.commands.BaseCommand;
+import bot.bot.messages.CommandContext;
+import bot.bot.commands.Status;
+
+import static bot.bot.config.CommandResponse.STOP_COMMAND_MESSAGE;
+
+public class StopCommand extends BaseCommand {
+
+    @Override
+    public String getName() {
+        return "!stop";
+    }
+
+    @Override
+    public boolean isAvailableInStatus(Status status) {
+        return status.getName().equals("ACTIVE"); // Команда доступна только в статусе ACTIVE
+    }
+
+    @Override
+    public void execute(CommandContext context) {
+        context.getMessageSender().sendMessage(STOP_COMMAND_MESSAGE); // Выполняем команду
+    }
+
+    @Override
+    public Status getNewStatus() {
+        return new Status("INACTIVE"); // Устанавливаем новый статус после выполнения команды
+    }
+}

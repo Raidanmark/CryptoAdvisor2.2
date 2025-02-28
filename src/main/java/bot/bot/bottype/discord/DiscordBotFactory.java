@@ -1,0 +1,35 @@
+package bot.bot.bottype.discord;
+
+
+import bot.bot.commands.CommandRegistry;
+import bot.bot.config.Config;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+public class DiscordBotFactory {
+    private static final Logger logger = LoggerFactory.getLogger(DiscordBotFactory.class);
+
+    public static JDA createJDA(String token, BotListener listener) {
+        try {
+            return JDABuilder.createDefault(token)
+                    .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
+                    .addEventListeners(listener)
+                    .build();
+        } catch (Exception e) {
+            logger.error("Error creating JDA: {}", e.getMessage(), e);
+            throw new RuntimeException("Error creating JDA", e);
+        }
+    }
+
+    private static BotListener createBotListener(CommandRegistry commandRegistry) {
+        return new BotListener(commandRegistry);
+    }
+
+    private static JDA createJDA(Config config, BotListener botListener) {
+        return DiscordBotFactory.createJDA(config.getDiscordToken(), botListener);
+    }
+}

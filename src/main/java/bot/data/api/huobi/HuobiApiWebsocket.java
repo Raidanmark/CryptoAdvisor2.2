@@ -1,7 +1,5 @@
 package bot.data.api.huobi;
 
-import bot.data.CandlestickHandler;
-import bot.data.DataCollecting;
 import bot.data.api.Websocket;
 import bot.data.model.Kline;
 import bot.data.model.WebSocketMessage;
