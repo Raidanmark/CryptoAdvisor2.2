@@ -2,7 +2,7 @@ package bot.bot.bottype.discord;
 
 import bot.bot.commands.Command;
 import bot.bot.commands.CommandRegistry;
-import bot.commands.*;
+
 import bot.bot.messages.CommandContext;
 import bot.bot.messages.MessageSender;
 import bot.bot.commands.Status;
