@@ -1,4 +1,4 @@
-package bot.status;
+package bot.commands;
 
 public class Status {
     private final String name;

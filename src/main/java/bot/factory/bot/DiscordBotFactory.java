@@ -1,8 +1,7 @@
-package bot.factory;
+package bot.factory.bot;
 
 
 import bot.bottype.discord.BotListener;
-import bot.chatbot.JDABotService;
 import bot.commands.CommandRegistry;
 import bot.config.Config;
 import net.dv8tion.jda.api.JDA;

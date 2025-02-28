@@ -1,9 +1,7 @@
 package bot.data;
 
-import bot.analytics.TickerAnalyzer;
 import bot.data.model.Ticker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TickerRepository {

@@ -1,4 +1,4 @@
-package bot.factory;
+package bot.factory.bot;
 
 
 import bot.chatbot.BotService;

@@ -1,6 +1,6 @@
 package bot.messages;
 
-import bot.status.Status;
+import bot.commands.Status;
 
 public class CommandContext {
     private final MessageSender messageSender;

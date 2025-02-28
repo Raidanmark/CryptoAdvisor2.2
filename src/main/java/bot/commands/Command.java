@@ -1,7 +1,6 @@
 package bot.commands;
 
 import bot.messages.CommandContext;
-import bot.status.Status;
 
 public interface Command {
     String getName();

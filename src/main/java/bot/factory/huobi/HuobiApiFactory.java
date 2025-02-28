@@ -1,4 +1,4 @@
-package bot.factory;
+package bot.factory.huobi;
 
 import bot.data.api.huobi.HuobiApiWebsocket;
 import bot.data.TickerRepository;

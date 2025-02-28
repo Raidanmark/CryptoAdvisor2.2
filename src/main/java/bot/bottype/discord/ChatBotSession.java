@@ -3,7 +3,7 @@ package bot.bottype.discord;
 import bot.commands.*;
 import bot.messages.CommandContext;
 import bot.messages.MessageSender;
-import bot.status.Status;
+import bot.commands.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

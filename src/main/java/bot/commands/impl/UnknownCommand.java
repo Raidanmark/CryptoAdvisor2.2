@@ -2,7 +2,7 @@ package bot.commands.impl;
 
 import bot.commands.BaseCommand;
 import bot.messages.CommandContext;
-import bot.status.Status;
+import bot.commands.Status;
 
 import static bot.config.CommandResponse.UNKNOWN_COMMAND_MESSAGE;
 

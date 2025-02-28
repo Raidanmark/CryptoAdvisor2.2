@@ -1,6 +1,6 @@
 package bot.analytics;
 
-import bot.analytics.methods.MACD;
+import model.analytics.methods.MACD;
 
 import bot.bottype.discord.BotListener;
 import bot.data.Data;

@@ -15,4 +15,16 @@ public class Config {
         return dotenv.get("DISCORD_TOKEN");
     }
 
+    public String getDBRoot() {
+        return dotenv.get("DB_ROOT");
+    }
+
+    public String getDBUser() {
+        return dotenv.get("DB_USER");
+    }
+
+    public String getDBPassword() {
+        return dotenv.get("DB_PASSWORD");
+    }
+
 }

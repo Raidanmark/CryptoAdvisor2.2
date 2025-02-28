@@ -22,6 +22,7 @@ public class DataCollecting {
     private static final Logger logger = LoggerFactory.getLogger(DataCollecting.class);
 
 
+    //TODO: Creating by factory
     public DataCollecting(ApiClient apiClient, Websocket websocket, TickerRepository tickerRepository, DataConfig dataConfig, CandleFilter candleFilter) {
         this.apiClient = apiClient;
         this.websocket = websocket;
@@ -32,6 +33,7 @@ public class DataCollecting {
 
     }
 
+    //FIXME: All lifecycle of class executing here
     public List<Ticker> start() {
         try {
 
@@ -48,6 +50,8 @@ public class DataCollecting {
         return apiClient.marketTickers(Collections.emptyMap());
     }
 
+    //Creating sorted tickers list
+    //Logically after this should be created ticker factory
     private List<DOTMarketData> sortAndLimitTickers(List<MarketData> marketData) {
         return marketData.stream()
                 .map(data -> new DOTMarketData(data.symbol(), data.vol()))
@@ -56,6 +60,7 @@ public class DataCollecting {
                 .collect(Collectors.toList());
     }
 
+    //FIXME: Call fetch klines for all ticker (with timeframe). Cycle should be as method from another place (fx ticker navigation)
     private List<Ticker> fetchCandlestickData(List<DOTMarketData> tickers) {
         List<Ticker> allTickers = new ArrayList<>();
         for (DOTMarketData ticker : tickers) {
@@ -72,6 +77,7 @@ public class DataCollecting {
         return allTickers;
     }
 
+    //FIXME: Candles amount should come from another place
     private List<Kline> fetchKlines(DOTMarketData ticker, String timeframe) throws IOException, URISyntaxException {
         Map<String, String> parameters = Map.of(
                 "period", timeframe,
@@ -81,11 +87,12 @@ public class DataCollecting {
         return apiClient.getKlines(parameters);
     }
 
+    //Util for fetchCandlestickData
     private void setupWebsocketUpdates(String symbol, String timeframe) {
         websocket.updateCandlestick(symbol, timeframe, this::handleNewCandlestick);
     }
 
-
+    //FIXME: Should be created by factory and called from main file or same
     private Ticker createTicker(DOTMarketData ticker, String timeframe, List<Kline> klineData) {
         LinkedList<Double> closePrices = klineData.stream()
                 .map(Kline::close)
@@ -96,16 +103,18 @@ public class DataCollecting {
     }
 
 
-    // Обрабатывает обновления данных через WebSocket
+    // Handles data updates via WebSocket
     protected void handleNewCandlestick(Kline kline, String channel, long timestamp) {
         String[] parts = channel.split("\\.");
         String symbol = parts[1];
         String timeframe = parts[3];
 
-        // Находим тикер в репозитории
+        // Find the ticker in the repository
+        //FIXME: Should be used method from another file (fx ticker navigation)
         Ticker ticker = tickerRepository.findTicker(symbol, timeframe);
         if (ticker != null) {
-            // Проверяем, нужно ли обновлять данные тикера
+            // Check whether it is necessary to update ticker data
+            //FIXME: It should be another class with methods for this
             long adjustedTimestamp = ticker.lastTimestamp() + candleFilter.getIntervalDuration(timeframe);
 
             if (timestamp > adjustedTimestamp) {

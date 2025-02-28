@@ -5,6 +5,7 @@ import bot.config.DataConfig;
 import bot.data.*;
 import bot.data.api.ApiClient;
 import bot.data.api.Websocket;
+import bot.factory.huobi.HuobiApiFactory;
 
 public class DataCollectingFactory {
     public static DataCollecting create(TickerRepository tickerRepository) {

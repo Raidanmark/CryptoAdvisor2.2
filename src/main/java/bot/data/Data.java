@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+//TODO: It should be class responsible for all data moves
 public class Data {
     private final TickerRepository tickerRepository;
     private final DataCollecting dataCollecting;
@@ -18,24 +19,9 @@ public class Data {
     }
 
 
-    public void start() {
-        loadTickers();
-        analyzeTickers();
-    }
-
-
     private void loadTickers() {
-        List<Ticker> initialTickers = dataCollecting.start();
-        tickerRepository.addTickers(initialTickers);
-        logger.info("Tickers loaded: " + tickerRepository.getAllTickers());
+         dataCollecting.start();
     }
 
-    private void analyzeTickers() {
-        tickerRepository.analyzeAllTickers();
-    }
-
-    public void updateTicker(Ticker updatedTicker) {
-        tickerRepository.updateTicker(updatedTicker);
-    }
 }
 

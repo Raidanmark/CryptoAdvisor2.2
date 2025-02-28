@@ -4,7 +4,7 @@ import bot.commands.BaseCommand;
 import bot.data.TickerRepository;
 import bot.data.model.Ticker;
 import bot.messages.CommandContext;
-import bot.status.Status;
+import bot.commands.Status;
 
 public class StatusCommand extends BaseCommand {
     private  TickerRepository tickerRepository;
