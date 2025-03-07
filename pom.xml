@@ -89,6 +89,14 @@
             <version>8.0.33</version>
         </dependency>
 
+        <!--jackson-dataformat-yaml 2.15.2 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+
+
         <!--jackson-annotations 2.18.2 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

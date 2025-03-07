@@ -24,24 +24,26 @@ public class TickerDAO implements BaseDAO {
         }
     }
 
-    // Сохранение в БД, возвращает объект Ticker с заполненным id
-    public Ticker saveTicker(String tickerName) throws SQLException {
+    public Ticker saveTicker(Ticker ticker) throws SQLException {
         String insertSql = "INSERT INTO tickers (name) VALUES (?)";
         try (PreparedStatement ps = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, tickerName);
+            ps.setString(1, ticker.getName());
             ps.executeUpdate();
+        }
+        return null; // или бросить исключение, если не удалось
+    }
 
-            try (ResultSet rs = ps.getGeneratedKeys()) {
+    public Long findIdByName(String name) throws SQLException {
+        String selectSql = "SELECT id FROM tickers WHERE name = ?";
+        try (PreparedStatement ps = connection.prepareStatement(selectSql)) {
+            ps.setString(1, name);
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    long generatedId = rs.getLong(1);
-                    Ticker ticker = new Ticker(tickerName);
-                    ticker.setId(generatedId);
-                    ticker.setName(tickerName);
-                    return ticker;
+                    return rs.getLong("id");
                 }
             }
         }
-        return null; // или бросить исключение, если не удалось
+        return null;
     }
 
 

@@ -1,12 +1,14 @@
-package bot.model.factory;
+package bot.model.factory.model;
 
 import bot.model.dao.TimeframeDAO;
 import bot.model.entities.Ticker;
 import bot.model.entities.Timeframe;
+import bot.model.factory.AutoFactory;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@AutoFactory
 public class TimeframeFactory {
     private final TimeframeDAO timeframeDAO;
 
@@ -19,10 +21,5 @@ public class TimeframeFactory {
         return timeframeDAO.saveTimeframe(ticker, tfName);
     }
 
-    // Или метод, создающий несколько таймфреймов
-    public void createTimeframes(Ticker ticker, List<String> timeframeNames) throws SQLException {
-        for (String tfName : timeframeNames) {
-            timeframeDAO.saveTimeframe(ticker, tfName);
-        }
-    }
+
 }

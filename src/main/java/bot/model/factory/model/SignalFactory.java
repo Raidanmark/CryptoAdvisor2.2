@@ -1,12 +1,14 @@
-package bot.model.factory;
+package bot.model.factory.model;
 
 import bot.model.dao.SignalDAO;
 import bot.model.entities.MethodSet;
 import bot.model.entities.Timeframe;
+import bot.model.factory.AutoFactory;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@AutoFactory
 public class SignalFactory {
     private final SignalDAO signalDAO;
 

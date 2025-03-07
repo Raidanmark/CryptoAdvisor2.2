@@ -12,6 +12,7 @@ public class Ticker {
 
     public Ticker(String name) {
         this.name = name;
+
     }
 
     public Long getId() {

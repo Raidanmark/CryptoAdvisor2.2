@@ -1,46 +1,46 @@
 package bot.bot.commands.impl;
 
 import bot.bot.commands.BaseCommand;
+import bot.bot.commands.CommandConfig;
 import bot.bot.messages.CommandContext;
 import bot.bot.commands.Status;
-
-import static bot.bot.config.CommandResponse.*;
 
 public class HelpCommand extends BaseCommand {
 
     @Override
     public String getName() {
-        return "!help"; // Приведено к нижнему регистру для согласованности
+        return CommandConfig.getInstance().commands.get("help").name;
     }
 
     @Override
-    public boolean isAvailableInStatus(Status status) {
-        return true; // Команда доступна во всех статусах
-    }
+    public boolean isAvailableInStatus(Status status) { return true; }
 
     @Override
     public void execute(CommandContext context){
+        CommandConfig.CommandEntry helpCommand = CommandConfig.getInstance().commands.get("help");
+
         String statusName = context.getStatus().getName();
 
         switch (statusName) {
             case "INACTIVE":
-                context.getMessageSender().sendMessage(HELP_COMMAND_MESSAGE_INACTIVE);
+                context.getMessageSender()
+                        .sendMessage(helpCommand.messages.inactive);
                 break;
 
             case "ACTIVE":
 
-                context.getMessageSender().sendMessage(HELP_COMMAND_MESSAGE_ACTIVE);
+                context.getMessageSender()
+                        .sendMessage(helpCommand.messages.active);
                 break;
 
             default:
-                context.getMessageSender().sendMessage(UNKNOWN_STATUS_MESSAGE);
+                context.getMessageSender()
+                        .sendMessage(CommandConfig.getInstance().commands.get("unknown").message);
                 break;
         }
 
     }
 
     @Override
-    public Status getNewStatus() {
-        return null; // Команда не меняет статус
-    }
+    public Status getNewStatus() {return null; }
 }

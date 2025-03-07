@@ -1,0 +1,32 @@
+commands:
+  start:
+    name: "!start"
+    message: "Starting the bot ..."
+    available_in_status: "INACTIVE"
+    new_status: "ACTIVE"
+
+  stop:
+    name: "!stop"
+    message: "Stopping the bot..."
+    available_in_status: "ACTIVE"
+    new_status: "INACTIVE"
+
+  help:
+    name: "!help"
+    messages:
+      inactive: "Available commands: <<!start>>"
+      active: "Available commands: <<!stop>>, <<!status>>"
+    available_in_status: "ANY"
+    new_status: null
+
+  status:
+    name: "!status"
+    message: "Bot working! Everything is fine!"
+    available_in_status: "ACTIVE"
+    new_status: null
+
+  unknown:
+    name: "__unknown__"
+    message: "Unknown command. Write <<!help>> for more information."
+    available_in_status: "ANY"
+    new_status: null

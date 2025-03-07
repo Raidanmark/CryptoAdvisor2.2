@@ -22,20 +22,36 @@ public class ChatBotSession {
         this.currentStatus = new Status("INACTIVE"); // Начальный статус
     }
 
-    // Метод для обработки команд
+    // Method for processing commands
     public void processCommand(String commandText) {
         if (!isCommand(commandText)) {
             handleNonCommandMessage(commandText);
             return;
         }
 
+        //Check is command exist
+        if(!isCommandExists(commandText)) {
+            handleUnexistableCommand(commandText);
+            return;
+        }
+
+
         Command command = commandRegistry.getCommand(commandText);
-        if (!isCommandAvailable(command)) {
+        if (!isCommandAvailableInStatus(command)) {
             handleUnavailableCommand(commandText);
             return;
         }
 
         executeCommand(command);
+    }
+
+    private void handleUnexistableCommand(String commandText) {
+        messageSender.sendMessage("<" + commandText + "> is unavailable command. Write <<!Help>> to get more information about the commands.");
+    }
+
+    private boolean isCommandExists(String commandText) {
+        return commandRegistry.getAllCommands().stream()
+                .anyMatch(command -> command.getName().equalsIgnoreCase(commandText));
     }
 
     private boolean isCommand(String commandText) {
@@ -46,12 +62,12 @@ public class ChatBotSession {
         logger.info("Received non-command message: " + message);
     }
 
-    private boolean isCommandAvailable(Command command) {
+    private boolean isCommandAvailableInStatus(Command command) {
         return command != null && command.isAvailableInStatus(currentStatus);
     }
 
     private void handleUnavailableCommand(String commandText) {
-        messageSender.sendMessage("Command <" + commandText + "> is not available in the current status.");
+        messageSender.sendMessage("Command <" + commandText + "> is not available in the current status <" + currentStatus.getName() + ">. Write <<!Help>> to get more information about the bot.");
     }
 
     private void executeCommand(Command command) {

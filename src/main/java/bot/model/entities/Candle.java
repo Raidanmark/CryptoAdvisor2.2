@@ -15,21 +15,8 @@ public class Candle {
     private long timestamp;
 
     // Конструктор для новых свечей (без id)
-    public Candle(String ticker, String timeframe, double openPrice, double highPrice, double lowPrice, double closePrice, double volume) {
+    private Candle (String ticker, String timeframe, double openPrice, double highPrice, double lowPrice, double closePrice, double volume, long timestamp) {
         this.id = null; // Новая свеча (id ещё не задан)
-        this.ticker = ticker;
-        this.timeframe = timeframe;
-        this.openPrice = openPrice;
-        this.highPrice = highPrice;
-        this.lowPrice = lowPrice;
-        this.closePrice = closePrice;
-        this.volume = volume;
-        this.timestamp = Instant.now().getEpochSecond();
-    }
-
-    // Конструктор для свечей, загруженных из БД (с id)
-    public Candle(Long id, String ticker, String timeframe, double openPrice, double highPrice, double lowPrice, double closePrice, double volume, long timestamp) {
-        this.id = id;
         this.ticker = ticker;
         this.timeframe = timeframe;
         this.openPrice = openPrice;
@@ -39,6 +26,10 @@ public class Candle {
         this.volume = volume;
         this.timestamp = timestamp;
     }
+    public static Candle create(String ticker, String timeframe, double openPrice, double highPrice, double lowPrice, double closePrice, double volume, long timestamp) {
+        return new Candle(ticker, timeframe, openPrice, highPrice, lowPrice, closePrice, volume, timestamp);
+    }
+
 
     public Long getId() { return id; }
     public String getTicker() { return ticker; }

@@ -1,11 +1,13 @@
-package bot.model.factory;
+package bot.model.factory.model;
 
 import bot.model.dao.MethodDAO;
 import bot.model.entities.Method;
 import bot.model.entities.Ticker;
+import bot.model.factory.AutoFactory;
 
 import java.sql.SQLException;
 
+@AutoFactory
 public class MethodFactory {
     private final MethodDAO methodDAO;
 

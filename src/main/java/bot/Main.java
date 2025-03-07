@@ -8,13 +8,18 @@ import bot.bot.commands.CommandRegistry;
 import bot.bot.config.Config;
 import bot.bot.chatbot.BotFactory;
 import bot.bot.bottype.discord.DiscordBotFactory;
+import bot.model.entities.Ticker;
 import bot.model.factory.DAOFactory;
+import bot.model.factory.FactoryProvider;
+import bot.model.factory.model.TickerFactory;
 import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main {
@@ -23,21 +28,37 @@ public class Main {
     public static void main(String[] args) {
         try {
 
+            FactoryProvider.finishInitialization();
 
-            // Создаём конфиг
+            // Create config
             Config config = new Config();
 
-            //Создавать тут все конфиги
-
-
-
+            //Connection to DB
             Connection connection = DriverManager.getConnection(
                     config.getDBRoot(),
                     config.getDBUser(),
                     config.getDBPassword()
             );
 
-            DAOFactory daoFactory = new DAOFactory(connection);
+
+
+            // Commands initialization
+            CommandRegistry commandRegistry = CommandFactory.createCommandRegistry();
+            // Creating Discord BotListener
+            BotListener botListener = new BotListener(commandRegistry);
+            // Creating JDA
+            JDA jda = DiscordBotFactory.createJDA(config.getDiscordToken(), botListener);
+
+            // Bot creating and launching
+            BotService botService = BotFactory.createBot("discord", jda);
+            BotCore botCore = new BotCore(botService);
+            botCore.start();
+
+            List<String> tickers = List.of("wftpq", "tpwq", "ssc");
+            FactoryProvider.getFactory(DAOFactory.class);
+            Ticker ticker = FactoryProvider.getFactory(TickerFactory.class).createTicker("BTC");
+
+
 
 /*
             for (Ticker ticker : allTickers) {
@@ -56,24 +77,7 @@ public class Main {
 */
 
 
-            // Commands initialization
-            CommandRegistry commandRegistry = CommandFactory.createCommandRegistry();
 
-
-
-
-
-
-
-            // Создаём Discord BotListener
-            BotListener botListener = new BotListener(commandRegistry);
-            // Создаём JDA через фабрику
-            JDA jda = DiscordBotFactory.createJDA(config.getDiscordToken(), botListener);
-
-            // 5️⃣ Создаём и запускаем бота
-            BotService botService = BotFactory.createBot("discord", jda);
-            BotCore botCore = new BotCore(botService);
-            botCore.start();
 
 
 

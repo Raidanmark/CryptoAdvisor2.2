@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@AutoFactory
 public class DAOFactory {
     private final Connection connection;
     private final Map<Class<?>, Object> daoCache = new HashMap<>();
